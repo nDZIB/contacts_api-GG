@@ -10,6 +10,7 @@ import java.util.Arrays;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -19,13 +20,14 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import go.contactsapi.service.ContactsService;
 import go.contactsapi.service.ContactsServiceTests;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(ContactsController.class)
 public class ContactsControllerTest {
 
-	@InjectMocks
+	@Autowired
 	private MockMvc contactsController;
 
 	@MockBean
@@ -33,7 +35,7 @@ public class ContactsControllerTest {
 
 	// verify that the end point is okay
 	@Test
-	public void contactsControllerGetAllContactsEndpointsIsUp() {
+	public void contactsControllerGetAllContactsEndpointsIsUp() throws Exception{
 		when(contactsService.getAllContacts()).thenReturn(Arrays.asList());
 
 		RequestBuilder getAllContactsRequest = MockMvcRequestBuilders.get("/contacts")
@@ -43,17 +45,15 @@ public class ContactsControllerTest {
 	}
 
 	@Test
-	public void contactsControllerGetAllContactsEndpointIsReturningAValidList() {
+	public void contactsControllerGetAllContactsEndpointIsReturningAValidList() throws Exception{
 		when(contactsService.getAllContacts()).thenReturn(Arrays.asList());
 
 		RequestBuilder getAllContactsRequest = MockMvcRequestBuilders.get("/contacts")
 				.accept(MediaType.APPLICATION_JSON);
 		
 
-		MvcResult allContacts = contactsController.perform(getAllContactsRequest)
-							.andExpect(content().json("[]"))
-							.andReturn();
-		//incomplete test
+		contactsController.perform(getAllContactsRequest)
+							.andExpect(content().json("[]"));
 	}
 
 }
