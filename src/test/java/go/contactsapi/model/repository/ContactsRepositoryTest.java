@@ -14,6 +14,7 @@ public class ContactsRepositoryTest {
 	@Autowired
 	private ContactsRepository contactsRepository;
 	
+	
 	@Test
 	public void contactsRepositoryFindAllMethodReturnsValuesTest() {
 		//verify that a valid list object is returned

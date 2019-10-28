@@ -26,6 +26,7 @@ public class ContactsServiceTests {
 	private ContactsService contactsService;
 	
 	
+	//verify that some result is returned on calling getall contacts method
 	@Test
 	public void contactServiceGetAllContactsMethodReturnsListOfContacts() {
 		when(contactsRepository.findAll())//mock the contacts repository
@@ -59,13 +60,24 @@ public class ContactsServiceTests {
 		assertThat(contactsService.getAllContacts()).asList().allSatisfy(contact -> {//for each contact in the list,
 																						// verify that it is valid
 			//contact phone number is exactly 9 characters long (a valid cameroon number)
-			assertThat(((StandardContactDTO)contact).getPhoneNumber()).hasSize(9);
+			assertThat(
+					((StandardContactDTO)
+							contact).getPhoneNumber()).hasSize(9);
+			
 			//contact phone number does not contain any white spaces
-			assertThat(((StandardContactDTO)contact).getPhoneNumber()).doesNotContainAnyWhitespaces();
+			assertThat(
+					((StandardContactDTO)
+							contact).getPhoneNumber()).doesNotContainAnyWhitespaces();
+			
 			//contact phone number does not contain alphabetic characters
-			assertThat(((StandardContactDTO)contact).getPhoneNumber()).containsOnlyDigits();
+			assertThat(
+					((StandardContactDTO)
+							contact).getPhoneNumber()).containsOnlyDigits();
+			
 			//verify that each contact starts with a 6 or a 2
-			assertThat(((StandardContactDTO)contact).getPhoneNumber()).matches(Pattern.compile("[62][0-9]*"));
+			assertThat(
+					((StandardContactDTO)
+							contact).getPhoneNumber()).matches(Pattern.compile("[62][0-9]*"));
 		});
 	}
 }
