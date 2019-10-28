@@ -7,14 +7,13 @@ import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentMatchers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import go.contactsapi.model.Contact;
+import go.contactsapi.service.StandardContactDTO;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -25,7 +24,7 @@ public class ContactsAppIT {
 	
 	@Test
 	public void getAllContactsEndPointReturnsListOfContacts() {
-		List<Contact> contacts = restTemplate
+		List<StandardContactDTO> contacts = restTemplate
 				.getForObject("/contacts", ArrayList.class);
 		
 		assertThat(contacts).hasSize(2);
